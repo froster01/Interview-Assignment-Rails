@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
     user = User.find_by(username: user_params[:username])
 
     if user && user.authenticate(user_params[:password])
+      user.update(auth_token: SecureRandom.hex(20))
 
       render json: { status: "success", token: user.auth_token, message: "Logged in!" }, status: :ok
     else
