@@ -1,4 +1,5 @@
 class CarBatteriesController< ApplicationController
+  before_action :auth_request
   before_action :set_car_battery, only: [ :show, :update, :destroy ]
 
   def index
