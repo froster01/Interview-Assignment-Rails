@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  include Response
   before_action :auth_request
 
   private

@@ -4,45 +4,27 @@ class CarBatteriesController < ApplicationController
 
   def index
     car_batteries = CarBattery.all
-    render json: {
-      message: "Successfully fetch car batteries.",
-      data: car_batteries
-    }, status: :ok
+    render_success("Successfully fetch car batteries", { car_battery: car_batteries })
   end
 
   def show
-    render json: {
-      message: "Car battery details received.",
-      data: @car_battery
-    }, status: :ok
+    render_success("Car battery details received.", { car_battery: @car_battery  })
   end
 
   def create
     car_battery = CarBattery.new(car_battery_params)
     if car_battery.save
-      render json: {
-        message: "Succesfully create new car battery.",
-        data: car_battery
-      }, status: :created
+      render_success("Successfully create new car battery", { car_battery:  car_battery  }, :created)
     else
-      render json: {
-        message: "Failed to create car battery.",
-        errors: car_battery.errors.full_messages
-      }, status: :unprocessable_entity
+      render_error("Failed to create car battery", car_battery.errors.full_messages)
     end
   end
 
   def update
     if @car_battery.update(car_battery_params)
-      render json: {
-        message: "Car battery updated successfully.",
-        data: @car_battery
-      }, status: :ok
+      render_success("Car battery updated successfully", { car_battery: @car_battery })
     else
-      render json: {
-        message: "Car battery update failed.",
-        errors: @car_battery.errors.full_messages
-      }, status: :unprocessable_entity
+      render_error("Car battery failed to update!.", @car_battery.errors.full_messages)
     end
   end
 

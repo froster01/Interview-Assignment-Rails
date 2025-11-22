@@ -5,22 +5,25 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by(username: user_params[:username])
 
-    if user && user.authenticate(user_params[:password])
-      user.update(auth_token: SecureRandom.hex(20))
+    if user&.authenticate(user_params[:password])
+      user.update_column(:auth_token, SecureRandom.hex(20))
 
-      render json: { status: "success", token: user.auth_token, message: "Logged in!" }, status: :ok
+      render_success("Succesfully Login.", { token: user.auth_token })
+
     else
-      render json: { status: "error", message: "Invalid Username or Password" }, status: :unauthorized
+      render_error("Invalid Username of Passowrd!", "unauthorized", :unauthorized)
     end
   end
 
   def destroy
-    @current_user.update_column(:auth_token, SecureRandom.hex(20))
-    render json: { message: "logged Out Success!" }, status: :ok
-  end
-end
+    @current_user.update_column(:auth_token, nil)
 
-private
-def user_params
-  params.require(:user).permit(:username, :password)
+    render_success("Logged Out Succesfully.", { token: @current_user.auth_token })
+  end
+
+  private
+
+  def user_params
+    params.require(:user).permit(:username, :password)
+  end
 end

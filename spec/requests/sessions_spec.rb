@@ -27,7 +27,7 @@ describe 'Login API', type: :request do
         "Authorization": "Bearer #{user.auth_token}"
       }
       expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)['token']).to be_present
+      expect(JSON.parse(response.body)['data']).to be_present
     end
   end
 end
@@ -42,7 +42,7 @@ describe 'Logout API', type: :request do
 
       expect(response).to have_http_status(:ok)
       user.reload
-      expect(user.auth_token).to be_present
+      expect(user.auth_token).to be_nil
     end
   end
 end
