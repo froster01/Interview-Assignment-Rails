@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :set_user, only: [ :show, :update, :destroy ]
   skip_before_action :auth_request, only: [ :create ]
 
   def index
@@ -9,7 +10,7 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_params)
     if user.save
-      render_success("User registered succesfully.", user, status: :created)
+      render_success("User registered succesfully.", user, :created)
     else
       render_error("Registration failed.", user.errors.full_messages)
     end
@@ -27,7 +28,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
-    headers :no_content
+    head :no_content
   end
 
   private
@@ -36,6 +37,6 @@ class UsersController < ApplicationController
   end
 
   def set_user
-    @user = User.find_by(params[:id])
+    @user = User.find(params[:id])
   end
 end
