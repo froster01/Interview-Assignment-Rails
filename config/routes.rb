@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+resources :users
 resources :car_batteries
-post "/register", to: "registrations#create"
-post "/login", to: "sessions#create"
-delete "/logout", to: "sessions#destroy"
+
+post "sessions/login"
+delete "sessions/logout"
+
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
