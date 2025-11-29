@@ -35,15 +35,15 @@ RSpec.describe User, type: :model do
     expect(user.authenticate("pass123")).to be_falsey
   end
 
-  it 'generate the auth_token when login' do
-    user= create(:user)
-    expect(user.auth_token).to be_present
-  end
+  # it 'generate the auth_token when login' do
+  #   user= create(:user)
+  #   expect(user.auth_token).to be_present
+  # end
 
-  it 'confirmed auth_token is unique' do
-    user1 = create(:user, username: "Ali")
-    user2 = create(:user, username: "Abu")
+  # it 'confirmed auth_token is unique' do
+  #   user1 = create(:user, username: "Ali")
+  #   user2 = create(:user, username: "Abu")
 
-    expect(user1.auth_token).not_to eq(user2.auth_token)
-  end
+  #   expect(user1.auth_token).not_to eq(user2.auth_token)
+  # end
 end

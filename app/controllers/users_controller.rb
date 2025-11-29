@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update
+    if @user.update(user_params)
       render_success("User updated succesfully.", @user)
     end
   end
