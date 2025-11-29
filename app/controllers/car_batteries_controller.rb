@@ -3,8 +3,11 @@ class CarBatteriesController < ApplicationController
   before_action :set_car_battery, only: [ :show, :update, :destroy ]
 
   def index
+    items_per_page = 1
     car_batteries = CarBattery.all
-    render_success("Successfully fetch car batteries", { car_battery: car_batteries })
+    @pagy, @car_batteries = pagy(car_batteries, items: items_per_page)
+    @pagination = pagy_metadata(@pagy)
+    render_success("Successfully fetch car batteries", { car_batteries: @car_batteries, pagination: @pagination })
   end
 
   def show

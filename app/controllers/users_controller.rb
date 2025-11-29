@@ -3,8 +3,11 @@ class UsersController < ApplicationController
   skip_before_action :auth_request, only: [ :create ]
 
   def index
-    user = User.all
-    render_success("List all users: ", user)
+    items_per_page = 1
+    users = User.all
+    @pagy, @users = pagy(users, items: items_per_page)
+    @pagination = pagy_metadata(@pagy)
+    render_success("List all users: ", { users: @users, pagination: @pagination })
   end
 
   def create

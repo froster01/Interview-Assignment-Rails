@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include Response
+  include Pagy::Backend
   before_action :auth_request
 
   def jwt_encode(payload)
